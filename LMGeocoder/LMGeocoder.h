@@ -62,7 +62,7 @@ typedef void (^LMGeocodeCallback) (NSArray<LMAddress *> * _Nullable results,  NS
 /*!
  *  Submits a forward-geocoding request using the specified string.
  *  After initiating a forward-geocoding request, do not attempt to initiate another forward- or reverse-geocoding request.
- *  Geocoding requests are rate-limited for each app, so making too many requests in a short period of time may cause some of the requests to fail. 
+ *  Geocoding requests are rate-limited for each app, so making too many requests in a short period of time may cause some of the requests to fail.
  *  When the maximum rate is exceeded, the geocoder passes an error object to your completion handler.
  *
  *  @param addressString The string describing the location you want to look up.
@@ -86,10 +86,19 @@ typedef void (^LMGeocodeCallback) (NSArray<LMAddress *> * _Nullable results,  NS
                                    service:(LMGeocoderService)service
                                      error:(NSError **)error;
 
+- (void)geocodeCountryCode:(NSString *)countryCode
+                   zipcode:(NSString *)zipcode
+                   service:(LMGeocoderService)service
+         completionHandler:(nullable LMGeocodeCallback)handler;
+
+- (void)geocodeZipcode:(NSString *)zipcode
+               service:(LMGeocoderService)service
+     completionHandler:(nullable LMGeocodeCallback)handler;
+
 /*!
  *  Submits a reverse-geocoding request for the specified coordinate.
  *  After initiating a reverse-geocoding request, do not attempt to initiate another reverse- or forward-geocoding request.
- *  Geocoding requests are rate-limited for each app, so making too many requests in a short period of time may cause some of the requests to fail. 
+ *  Geocoding requests are rate-limited for each app, so making too many requests in a short period of time may cause some of the requests to fail.
  *  When the maximum rate is exceeded, the geocoder passes an error object to your completion handler.
  *
  *  @param coordinate The coordinate to look up.
