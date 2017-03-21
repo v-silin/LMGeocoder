@@ -109,7 +109,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
                                            
                                            if (!error && placemarks.count) {
                                                // Request successful --> Parse response results
-                                               [self parseGeocodingResponseResults:placemarks service:kLMGeocoderAppleService];
+                                               handler([self parseGeocodingResponseResults:placemarks service:kLMGeocoderAppleService], nil);
                                            }
                                            else {
                                                // Request failed --> Return error
@@ -185,7 +185,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
                                            
                                            if (!error && placemarks.count) {
                                                // Request successful --> Parse response results
-                                               [self parseGeocodingResponseResults:placemarks service:kLMGeocoderAppleService];
+                                               handler([self parseGeocodingResponseResults:placemarks service:kLMGeocoderAppleService], nil);
                                            }
                                            else {
                                                // Request failed --> Return error
@@ -234,7 +234,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
                                            
                                            if (!error && placemarks.count) {
                                                // Request successful --> Parse response results
-                                               [self parseGeocodingResponseResults:placemarks service:kLMGeocoderAppleService];
+                                               handler([self parseGeocodingResponseResults:placemarks service:kLMGeocoderAppleService], nil);
                                            }
                                            else {
                                                // Request failed --> Return error
@@ -306,7 +306,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
                                              
                                              if (!error && placemarks.count) {
                                                  // Request successful --> Parse response results
-                                                 [self parseGeocodingResponseResults:placemarks service:kLMGeocoderAppleService];
+                                                 handler([self parseGeocodingResponseResults:placemarks service:kLMGeocoderAppleService], nil);
                                              }
                                              else {
                                                  // Request failed --> Return error
