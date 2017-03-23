@@ -41,6 +41,8 @@ static NSString * const LMLinesKey                  = @"lines";
 @synthesize ISOcountryCode = _ISOcountryCode;
 @synthesize formattedAddress = _formattedAddress;
 @synthesize lines = _lines;
+@synthesize street = _street;
+@synthesize state = _state;
 
 #pragma mark - INIT
 
@@ -87,6 +89,8 @@ static NSString * const LMLinesKey                  = @"lines";
         _ISOcountryCode = placemark.ISOcountryCode;
         _formattedAddress = formattedAddress;
         _lines = lines;
+        _street = placemark.addressDictionary[@"Street"];
+        _state = placemark.addressDictionary[@"State"];
     }
 }
 

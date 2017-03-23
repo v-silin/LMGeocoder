@@ -76,6 +76,16 @@
 @property (nonatomic, readonly, copy, nullable) NSArray<NSString *> *lines;
 
 /*!
+ *  The street name.
+ */
+@property (nonatomic, readonly, copy, nullable) NSString *street;
+
+/*!
+ *  The state name.
+ */
+@property (nonatomic, readonly, copy, nullable) NSString *state;
+
+/*!
  *  Initialize with response from server
  *
  *  @param locationData response object recieved from server
