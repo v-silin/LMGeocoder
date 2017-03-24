@@ -65,26 +65,42 @@ typedef void (^LMGeocodeCallback) (NSArray<LMAddress *> * _Nullable results,  NS
  *  Geocoding requests are rate-limited for each app, so making too many requests in a short period of time may cause some of the requests to fail.
  *  When the maximum rate is exceeded, the geocoder passes an error object to your completion handler.
  *
- *  @param addressString The string describing the location you want to look up.
+ *  @param address       The address
+ *  @param city          The city
+ *  @param state         The address
+ *  @param country       The country
+ *  @param zipCode       The zipCode
  *  @param service       The service API used to geocode.
  *  @param handler       The callback to invoke with the geocode results. The callback will be invoked asynchronously from the main thread.
  */
-- (void)geocodeAddressString:(NSString *)addressString
-                     service:(LMGeocoderService)service
-           completionHandler:(nullable LMGeocodeCallback)handler;
+- (void)geocodeAddress:(nullable NSString *)address
+                  city:(nullable NSString *)city
+                 state:(nullable NSString *)state
+               country:(nullable NSString *)country
+               zipcode:(nullable NSString *)zipCode
+               service:(LMGeocoderService)service
+     completionHandler:(LMGeocodeCallback)handler;
 
 /*!
  *  Submits a synchronous forward-geocoding request using the specified string.
  *
- *  @param addressString The string describing the location you want to look up.
+ *  @param address       The address
+ *  @param city          The city
+ *  @param state         The address
+ *  @param country       The country
+ *  @param zipCode       The zipCode
  *  @param service       The service API used to geocode.
  *  @param error         The error.
  *
  *  @return The geocode results.
  */
-- (nullable NSArray *)geocodeAddressString:(NSString *)addressString
-                                   service:(LMGeocoderService)service
-                                     error:(NSError **)error;
+- (nullable NSArray *)geocodeAddress:(nullable NSString *)address
+                                city:(nullable NSString *)city
+                               state:(nullable NSString *)state
+                             country:(nullable NSString *)country
+                             zipcode:(nullable NSString *)zipCode
+                             service:(LMGeocoderService)service
+                               error:(NSError **)error;
 
 - (void)geocodeCountryCode:(NSString *)countryCode
                    zipcode:(NSString *)zipcode

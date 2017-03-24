@@ -10,6 +10,8 @@
 #import "LMAddress.h"
 #import <Contacts/Contacts.h>
 
+static NSString * const kCOMMA_SEPARATOR = @", ";
+
 static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
 
 #define kGoogleAPIPostalcodeCityGeocodingURL(countryCode, postalCode)         [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?components=country:%@|postal_code:%@&sensor=true", countryCode, postalCode];
@@ -58,10 +60,45 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
 
 #pragma mark - GEOCODE
 
-- (void)geocodeAddressString:(NSString *)addressString
-                     service:(LMGeocoderService)service
-           completionHandler:(LMGeocodeCallback)handler
+- (NSString *)addressStringFrom:(NSString *)address
+                           city:(NSString *)city
+                          state:(NSString *)state
+                        country:(NSString *)country
+                        zipcode:(NSString *)zipCode
 {
+    NSString *result = [self concatLeftPart:address rightPart:city seporator:kCOMMA_SEPARATOR];
+    result = [self concatLeftPart:result rightPart:state seporator:kCOMMA_SEPARATOR];
+    result = [self concatLeftPart:result rightPart:country seporator:kCOMMA_SEPARATOR];
+    return [self concatLeftPart:result rightPart:zipCode seporator:kCOMMA_SEPARATOR];
+}
+
+- (NSString *)concatLeftPart:(NSString *)leftPart
+                   rightPart:(NSString *)rightPart
+                   seporator:(NSString *)seporator
+{
+    if (leftPart.length > 0 && rightPart.length > 0) {
+        return [[leftPart stringByAppendingString:seporator] stringByAppendingString:rightPart];
+    } else if (leftPart.length > 0) {
+        return leftPart;
+    } else {
+        return rightPart;
+    }
+}
+
+- (void)geocodeAddress:(nullable NSString *)address
+                  city:(nullable NSString *)city
+                 state:(nullable NSString *)state
+               country:(nullable NSString *)country
+               zipcode:(nullable NSString *)zipCode
+               service:(LMGeocoderService)service
+     completionHandler:(LMGeocodeCallback)handler
+{
+    NSString *addressString = [self addressStringFrom:address
+                                                 city:city
+                                                state:state
+                                              country:country
+                                              zipcode:zipCode];
+    
     _isGeocoding = YES;
     
     // Check address string
@@ -126,10 +163,20 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
     }
 }
 
-- (nullable NSArray *)geocodeAddressString:(nonnull NSString *)addressString
-                                   service:(LMGeocoderService)service
-                                     error:(NSError **)error
+- (nullable NSArray *)geocodeAddress:(nullable NSString *)address
+                                city:(nullable NSString *)city
+                               state:(nullable NSString *)state
+                             country:(nullable NSString *)country
+                             zipcode:(nullable NSString *)zipCode
+                             service:(LMGeocoderService)service
+                               error:(NSError **)error
 {
+    NSString *addressString = [self addressStringFrom:address
+                                                 city:city
+                                                state:state
+                                              country:country
+                                              zipcode:zipCode];
+
     // Check address string
     if (addressString == nil || addressString.length == 0)
     {
