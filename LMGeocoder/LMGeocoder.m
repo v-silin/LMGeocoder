@@ -119,7 +119,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
         // Valid address string --> Check service
         switch (service)
         {
-                case kLMGeocoderGoogleService:
+            case kLMGeocoderGoogleService:
             {
                 // Geocode using Google service
                 NSString *urlString = kGoogleAPIGeocodingURL(addressString);
@@ -136,7 +136,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
                                           }];
                 break;
             }
-                case kLMGeocoderAppleService:
+            case kLMGeocoderAppleService:
             {
                 // Geocode using Apple service
                 [self.appleGeocoder geocodeAddressString:addressString
@@ -176,14 +176,18 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
                                                 state:state
                                               country:country
                                               zipcode:zipCode];
-
+    
     // Check address string
     if (addressString == nil || addressString.length == 0)
     {
         // Invalid address string --> Return
-        *error = [NSError errorWithDomain:kLMGeocoderErrorDomain
-                                     code:kLMGeocoderErrorInvalidAddressString
-                                 userInfo:nil];
+        if (error != NULL)
+        {
+            *error = [NSError errorWithDomain:kLMGeocoderErrorDomain
+                                         code:kLMGeocoderErrorInvalidAddressString
+                                     userInfo:nil];
+        }
+        
         return nil;
     }
     else
@@ -205,7 +209,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
 {
     switch (service)
     {
-            case kLMGeocoderGoogleService:
+        case kLMGeocoderGoogleService:
         {
             // Geocode using Google service
             NSString *urlString = kGoogleAPIPostalcodeCityGeocodingURL(countryCode, zipcode);
@@ -222,7 +226,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
                                       }];
             break;
         }
-            case kLMGeocoderAppleService:
+        case kLMGeocoderAppleService:
         {
             // Geocode using Apple service
             [self.appleGeocoder geocodeAddressDictionary:@{CNPostalAddressPostalCodeKey : zipcode, CNPostalAddressISOCountryCodeKey : countryCode}
@@ -254,7 +258,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
 {
     switch (service)
     {
-            case kLMGeocoderGoogleService:
+        case kLMGeocoderGoogleService:
         {
             // Geocode using Google service
             NSString *urlString = kGoogleAPIPostalcodeGeocodingURL(zipcode);
@@ -271,7 +275,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
                                       }];
             break;
         }
-            case kLMGeocoderAppleService:
+        case kLMGeocoderAppleService:
         {
             // Geocode using Apple service
             [self.appleGeocoder geocodeAddressDictionary:@{CNPostalAddressPostalCodeKey : zipcode}
@@ -324,7 +328,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
         // Valid location coordinate --> Check service
         switch (service)
         {
-                case kLMGeocoderGoogleService:
+            case kLMGeocoderGoogleService:
             {
                 // Reverse geocode using Google service
                 NSString *urlString = kGoogleAPIReverseGeocodingURL(coordinate.latitude, coordinate.longitude);
@@ -341,7 +345,7 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
                                           }];
                 break;
             }
-                case kLMGeocoderAppleService:
+            case kLMGeocoderAppleService:
             {
                 // Reverse geocode using Apple service
                 CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude
@@ -378,9 +382,13 @@ static NSString * const kLMGeocoderErrorDomain = @"LMGeocoderError";
     if (!CLLocationCoordinate2DIsValid(coordinate))
     {
         // Invalid location coordinate --> Return
-        *error = [NSError errorWithDomain:kLMGeocoderErrorDomain
-                                     code:kLMGeocoderErrorInvalidCoordinate
-                                 userInfo:nil];
+        if (error != NULL)
+        {
+            *error = [NSError errorWithDomain:kLMGeocoderErrorDomain
+                                         code:kLMGeocoderErrorInvalidCoordinate
+                                     userInfo:nil];
+        }
+        
         return nil;
     }
     else
